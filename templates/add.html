@@ -1,0 +1,35 @@
+{% extends 'example.html' %}
+
+{% block title %}
+  Adding Thoughts...
+{% endblock %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+<h1>Add Thoughts </h1>
+<br/>
+
+<div class="form-group">
+  <form method="POST">
+    {% csrf_token %} <!-- Security token -->
+    {{ form.media }} <!-- default django form with rich text editor -->
+    {{ form.as_p }} <!-- default django form wrapped in <p> -->
+    <button class="btn btn-secondary">Add Thought</button>
+    <!-- back to home page button -->
+    <a href="{% url 'home' %}" class="btn btn-secondary">Cancel</a>
+
+</div>
+
+
+{% else %}
+<h1>You are not authorized to view this page.  </h1>
+<br/>
+<p>Please login to add thoughts.</p>
+<a href="{% url 'login' %}">(Login)</a><br/>
+<a href="{% url 'register' %}">(Register)</a>
+
+
+{% endif %}
+
+{% endblock %}

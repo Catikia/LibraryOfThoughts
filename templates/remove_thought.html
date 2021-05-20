@@ -1,0 +1,44 @@
+{% extends 'example.html' %}
+
+{% block title %}
+  Remove Thoughts...
+{% endblock %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+
+ <!--allows only the creater of a post to remove -->
+{% if post.created_by.id == user.id %}
+
+
+
+<h1>Remove thought?</h1>
+<br/>
+<h3>'{{ post.title }}'</h3>
+<br/><br/>
+
+<h3>Would you like to permanently remove this thought from the library? </h3><br/>
+
+<br/>
+
+<div class="form-group">
+  <form method="POST">
+    {% csrf_token %} <!-- Security token -->
+    <button class="btn btn-secondary">Remove Thought</button>
+    <!-- back to home page button -->
+    <a href="{% url 'home' %}" class="btn btn-secondary">Cancel</a>
+
+</div>
+{% else %}
+<h1>You are not the authorized owner of this post.  </h1>
+<br/>
+{% endif %}
+{% else %}
+<h1>You are not authorized to view this page.  </h1>
+<br/>
+<p>Please login to remove thoughts.</p>
+<a href="{% url 'login' %}">(Login)</a><br/>
+<a href="{% url 'register' %}">(Register)</a>
+{% endif %}
+{% endblock %}

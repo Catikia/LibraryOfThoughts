@@ -1,0 +1,32 @@
+{% extends 'example.html' %}
+
+{% block content %}
+
+<h1>Thoughts</h1>
+
+<ul>
+<!--for loop loops through all posts and lists them individually-->
+{% for post in object_list %}
+     <li><a href="{% url 'blogpost-detail' post.pk %}">{{ post.title }}</a>
+        - {{ post.created_by.first_name }} {{ post.created_by.last_name }} - {{ post.thought_date }}
+       <small>
+         {% if user.is_authenticated %}
+         {% if post.created_by.id == user.id %}
+             <a href="{% url 'edit_thought' post.pk %}"> - (Edit)</a>
+             <a href="{% url 'remove_thought' post.pk %}"> - (Remove)</a>
+             {% endif %}
+         {% endif %}
+       </small><br/>
+
+       - <a href="{% url 'category' post.category|slugify %}">{{ post.category }}</a>
+        - {{ post.subject}} <br/>
+
+
+       {{ post.summary|safe }}<br/>
+     </li>
+{% endfor %}
+</ul>
+
+
+
+{% endblock %}
