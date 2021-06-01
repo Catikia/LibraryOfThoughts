@@ -18,6 +18,7 @@ class Category(models.Model):
         #return reverse('blogpost-detail', args=(str(self.id))) <use if going to newly created page>
         return reverse('home')
 
+#fields in database
 class Post(models.Model):
     title = models.CharField(max_length=255)
     author = models.CharField(max_length=255, default="Catikia")
